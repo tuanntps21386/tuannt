@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ps21386</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="dk">
+        <div class="khung">
+            <div class="tittle">
+                <h1>Đăng ký thành viên</h1>
+            </div>
+
+            <div id="noidung">
+                <form id="form">
+                    <div class="form-group">
+                        <legend>Mã sinh viên</legend>
+                        <input type="text" class="dk" id="msv">
+                        <span></span>
+                    </div>
+
+                    <div class="form-group">
+                        <legend>Họ và Tên</legend>
+                        <input type="text" class="dk" id="name">
+                        <span></span>
+                    </div>
+
+                    <div class="form-group">
+                        <legend>Email</legend>
+                        <input type="email" class="dk" id="email">
+                        <span></span>
+                    </div>
+
+                    <div class="form-group">
+                        <legend>Giới tính</legend>
+                        <div id="frames">
+                            <fieldset class="nho">
+                                <input type="radio" name="gender"> Nam
+                                <input type="radio" name="gender"> Nữ
+                            </fieldset>
+                        </div>
+                        <p class="gender p"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <legend>Sở thích</legend>
+                        <div id="frames2">
+                            <fieldset class="nho">
+                                <input type="checkbox" name="checkbox">
+                                <label>Đọc sách</label>
+                                <input type="checkbox" name="checkbox">
+                                <label>Du lịch</label>
+                                <input type="checkbox" name="checkbox">
+                                <label>Âm nhạc</label>
+                                <input type="checkbox" name="checkbox">
+                                <label>Ẩm thực</label>
+                                <input type="checkbox" name="checkbox">
+                                <label>Khác</label>
+                            </fieldset>
+                        </div>
+                        <p class="hobby p"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <legend>Quốc tịch</legend>
+                        <select name="select" class="select" id="nationality">
+                            <option value="0">Chọn Quốc Tịch</option>
+                            <option value="1">Việt Nam</option>
+                            <option value="2">China</option>
+                            <option value="3">Japan</option>
+                            <option value="4">Korea</option>
+                        </select>
+                        <p class="nationality p"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <legend>Ghi chú</legend>
+                        <textarea type="textarea" class="note" id="note" rows="8"></textarea><br>
+                        <span></span>
+                    </div>
+                    <div class="but">
+                        <br><button class="button">Đăng ký</button>
+                        <button type="submit" class="button">Nhập lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        var $ = document.querySelector.bind(document);
+        var $$ = document.querySelectorAll.bind(document);
+
+        var form = $('#dk');
+        var mssv = $('#msv');
+        var fullName = $('#name');
+        var email = $('#email');
+        var genders = $$('input[name="gender"]');
+        var interests = $$('input[name="checkbox"]');
+        var nationality = $('#nationality');
+        var note = $('#note');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            validator();
+        })
+
+        function validator() {
+            //Không để trống: mã, họ tên và email
+            if (mssv.value === '') {
+                errorMessage(mssv, 'Không để trống mã');
+            }else if(mssv.value.length == 7){
+                successMessage(mssv);
+            } else {
+                errorMessage(mssv, 'Nhập đúng 7 kí tự');
+            }
+
+            //Không để trống họ tên 
+            if (fullName.value === '') {
+                errorMessage(fullName, 'Không để trống họ tên ');
+            }else if(fullName.value.length > 30){
+                errorMessage(fullName, 'Tối đa 30 ký tự');
+            } else {
+                successMessage(fullName);
+            }
+
+            //Không để trống email 
+            if (email.value === '') {
+                errorMessage(email, 'Không để trống email ');
+            } else {
+                successMessage(email);
+            }
+
+            //Phải chọn giới tính
+            if (!genders[0].checked && !genders[1].checked) {
+                $('.gender').innerText = 'Phải chọn giới tính';
+                $('#frames').style.background = 'yellow';
+            } else {
+                $('.gender').innerText = '';
+                $('#frames').style.background = 'none';
+                $('#frames').style.borderColor = 'green';
+            }
+
+            //Phải chọn sở thích 
+            var check = 0
+            for (var i = 0; i < interests.length; i++) {
+                if (interests[i].checked == true) {
+                    check++
+                }
+            }
+            if (check == 0) {
+                $('.hobby').innerText = 'Phải chọn sở thích';
+                $('#frames2').style.background = 'yellow';
+            } else {
+                $('.hobby').innerText = '';
+                $('#frames2').style.background = 'none';
+                $('#frames2').style.borderColor = 'green';
+            }
+
+            //Phải chọn quốc tịch
+            if (nationality.value == 0) {
+                $('.nationality').innerText = 'Phải chọn quốc tịch';
+                $('select').style.background = 'yellow';
+            } else {
+                $('.nationality').innerText = '';
+                $('select').style.background = 'none';
+                $('select').style.borderColor = 'green';
+            }
+
+            //Ít hơn 200 ký tự: ghi chú
+            if (note.value.length > 200) {
+                errorMessage(note, 'Ít hơn 200 ký tự');
+            } else {
+                successMessage(note);
+            }
+        }
+
+        //set lỗi
+        function errorMessage(input, message) {
+            var formGroup = input.parentElement;
+            var span = formGroup.querySelector('span');
+            formGroup.className = 'form-group error';
+            span.innerText = message;
+        }
+
+        //set thành công
+        function successMessage(input) {
+            var formGroup = input.parentElement;
+            formGroup.className = 'form-group success';
+        }
+
+    </script>
+</body>
+</html>

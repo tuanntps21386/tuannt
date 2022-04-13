@@ -1,0 +1,69 @@
+.form-group span {
+    visibility: hidden;
+}
+
+.form-group.error span {
+    visibility: visible;
+    color: red;
+}
+
+.form-group.error .note,
+.form-group.error .dk {
+    background-color: yellow;
+}
+
+.form-group.success .note,
+.form-group.success .dk {
+    border: 2px solid green;
+}
+
+.khung {
+    width: 40%;
+    margin: 5% auto;
+    border: 1px solid yellowgreen;
+    padding: 0 36px 0 36px;
+    background-color: rgb(248, 230, 195);
+}
+
+h1 {
+    text-align: center;
+    color: brown;
+}
+
+input, select, textarea{
+    width: 98%;
+    border-radius: 4px;
+}
+
+.nho input {
+    width: 16px;
+    border-radius: 4px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.dk, select {
+    padding: 4px 0;
+}
+
+
+.button {
+    background-color: orangered;
+    color: #fff;
+    font-size: 18px;
+    border: 0;
+    padding: 4px 8px;
+    margin-bottom: 24px;
+    margin-right: 28px;
+}
+
+.button:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.but {
+    margin-left: 38%;
+}
